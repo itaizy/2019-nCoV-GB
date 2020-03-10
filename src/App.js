@@ -81,7 +81,7 @@ function Stat ({ modifyTime, currentConfirmedCount, suspectedCount, deadCount, c
       </h3>
       <div className="row">
         <Tag number={currentConfirmedCount} className="numberconfirmed">
-          确诊
+          现存确诊
         </Tag>
         <Tag number={name=='湖北'?hbdata['suspected']:suspectedCount || '-'} className="number">
           疑似
@@ -108,7 +108,7 @@ function StatIncr ({ modifyTime}) {
       </h2>
       <div className="row">
         <TotalTag number={all.confirmedIncr} total={all.currentConfirmedCount} className="numberconfirmed">
-          确诊
+          现存确诊
         </TotalTag>
         <TotalTag number={all.suspectedIncr || '-'}  total={all.suspectedCount} className="number">
           疑似
