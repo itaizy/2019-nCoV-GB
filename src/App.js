@@ -251,6 +251,7 @@ function App () {
       {/* 趋势 */}
         <div className="card" id='Trends'>
         <h2>全国</h2>
+        <div>
             {/* {all.quanguoTrendChart.map(n => (              
               <div key={n.title}>
                 <img src={require('./images/' + n.imgUrl.split('/')[n.imgUrl.split('/').length - 1])}
@@ -308,7 +309,9 @@ function App () {
               ]
               }}/>
           </Suspense>
+          </div>
           <h2>湖北/非湖北</h2>
+          <div>
           <Suspense fallback={<div className="loading">正在加载中...</div>}>
             <PredictMultiple data={{
                 // "title": "确诊",
@@ -382,6 +385,7 @@ function App () {
               ]
               }}/>
           </Suspense>
+          </div>
           </div>
             {/* {all.hbFeiHbTrendChart.map(n => (
               <div key={n.title}>
