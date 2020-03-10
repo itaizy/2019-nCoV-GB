@@ -70,7 +70,7 @@ function News ({ province }) {
   )
 }
 
-function Stat ({ modifyTime, confirmedCount, suspectedCount, deadCount, curedCount, name }) {
+function Stat ({ modifyTime, currentConfirmedCount, suspectedCount, deadCount, curedCount, name }) {
   return (
     <div>
       <h3 id="Stas">
@@ -80,7 +80,7 @@ function Stat ({ modifyTime, confirmedCount, suspectedCount, deadCount, curedCou
         </span>
       </h3>
       <div className="row">
-        <Tag number={confirmedCount} className="numberconfirmed">
+        <Tag number={currentConfirmedCount} className="numberconfirmed">
           确诊
         </Tag>
         <Tag number={name=='湖北'?hbdata['suspected']:suspectedCount || '-'} className="number">
@@ -107,7 +107,7 @@ function StatIncr ({ modifyTime}) {
         </span>
       </h2>
       <div className="row">
-        <TotalTag number={all.confirmedIncr} total={all.confirmedCount} className="numberconfirmed">
+        <TotalTag number={all.confirmedIncr} total={all.currentConfirmedCount} className="numberconfirmed">
           确诊
         </TotalTag>
         <TotalTag number={all.suspectedIncr || '-'}  total={all.suspectedCount} className="number">
