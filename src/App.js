@@ -8,6 +8,7 @@ import provinces from './data/area'
 import NavFab from "./component/NavFab"
 import predictData from './data/predictData'
 import hbdata from './data/hb4gb'
+import ed from './data/echartsdata'
 
 import Tag from './Tag'
 
@@ -24,6 +25,7 @@ dayjs.extend(relativeTime)
 
 // const Map = React.lazy(() => import('./Map'))
 const Predict = React.lazy(() => import('./Predict'))
+const PredictMultiple = React.lazy(() => import('./PredictMultiple'))
 
 const provincesByName = keyBy(provinces, 'name')
 
@@ -249,7 +251,7 @@ function App () {
       {/* 趋势 */}
         <div className="card" id='Trends'>
         <h2>全国</h2>
-            {all.quanguoTrendChart.map(n => (              
+            {/* {all.quanguoTrendChart.map(n => (              
               <div key={n.title}>
                 <img src={require('./images/' + n.imgUrl.split('/')[n.imgUrl.split('/').length - 1])}
                      alt=""
@@ -259,9 +261,129 @@ function App () {
                          // fire window resize event to change height
                          window.dispatchEvent(new Event('resize'));
                      }}/>
-              </div>))}
+              </div>))} */}
+        <Suspense fallback={<div className="loading">正在加载中...</div>}>
+          <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "新增确诊", 
+                  "type": "true",
+                  "data": ed.quanguo.confirmedIncr,
+                }
+              ]
+              }}/>
+          <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "现存确诊", 
+                  "type": "true",
+                  "data": ed.quanguo.currentConfirmedCount,
+                }
+              ]
+              }}/>
+          <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "治愈", 
+                  "type": "true",
+                  "data": ed.quanguo.curedCount,
+                }
+              ]
+              }}/>
+          <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "死亡", 
+                  "type": "true",
+                  "data": ed.quanguo.deadCount,
+                }
+              ]
+              }}/>
+          </Suspense>
           <h2>湖北/非湖北</h2>
-            {all.hbFeiHbTrendChart.map(n => (
+          <Suspense fallback={<div className="loading">正在加载中...</div>}>
+            <PredictMultiple data={{
+                // "title": "确诊",
+                "xAxis": ed.xAxis, 
+                "yAxis": [
+                  {
+                    "legend": "湖北新增", 
+                    "type": "true",
+                    "data": ed.hubei.confirmedIncr,
+                  }
+                ]
+                }}/>
+            <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "湖北现存", 
+                  "type": "true",
+                  "data": ed.hubei.currentConfirmedCount,
+                }
+              ]
+              }}/>
+            <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "湖北治愈", 
+                  "type": "true",
+                  "data": ed.hubei.curedCount,
+                }
+              ]
+              }}/>
+            <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "湖北治愈新增", 
+                  "type": "true",
+                  "data": ed.hubei.curedIncr,
+                }
+              ]
+              }}/>
+            <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "非湖北确诊新增", 
+                  "type": "true",
+                  "data": ed.feihubei.confirmedIncr,
+                },
+                {
+                  "legend": "非湖北治愈新增", 
+                  "type": "true",
+                  "data": ed.feihubei.curedIncr,
+                }
+              ]
+              }}/>
+            <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "非湖北现存", 
+                  "type": "true",
+                  "data": ed.feihubei.currentConfirmedCount,
+                }
+              ]
+              }}/>
+          </Suspense>
+          </div>
+            {/* {all.hbFeiHbTrendChart.map(n => (
               <div key={n.title}>
                 <img src={require('./images/' + n.imgUrl.split('/')[n.imgUrl.split('/').length - 1])}
                      alt=""
@@ -272,7 +394,7 @@ function App () {
                          window.dispatchEvent(new Event('resize'));
                      }}/>
                      </div>))}
-                     </div>
+                     </div> */}
         {/* </Carousel> */}
       {/* </WingBlank> */}
       

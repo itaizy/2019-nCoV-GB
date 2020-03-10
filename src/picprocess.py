@@ -2,6 +2,10 @@
 import os
 import json
 from urllib.request import urlretrieve
+
+import requests
+from urllib.request import urlopen
+
 from PIL import Image
 import numpy as np
 val = os.system('cd .. && node scripts/build-origin.js')
@@ -66,3 +70,77 @@ val = os.system('cp ../build/index.html ../build/gb/')
 print('Done.' + str(val))
 val = os.system('python3 gb.py')
 print('GB Done.' + str(val))
+
+## Generate Data for Multi-Echarts
+frArea = open('./data/area.json', 'r', encoding='utf-8')
+area = json.load(frArea)
+hubei = []
+temp = []
+allp = {}
+hubeijson = {}
+for p in area:
+    response = requests.get(p['statisticsData'])
+    temp = response.json()
+    if p['pinyin'] == 'hubei':
+        for tt in temp['data']:
+            hubeijson[str(tt['dateId'])] = tt
+    for tdata in temp['data']:
+        if str(tdata['dateId']) in allp:
+            allp[str(tdata['dateId'])].append(tdata)
+        else:
+            allp[str(tdata['dateId'])] = [tdata]
+
+keywords = [
+    'currentConfirmedCount',
+    'deadIncr',
+    'curedIncr',
+    'confirmedCount',
+    'confirmedIncr',
+    'deadCount',
+    'curedCount',
+    'currentConfirmedIncr'
+]
+
+quanguo = {}
+hubei = {}
+feihubei = {}
+
+for tk in keywords:
+    quanguo[tk] = []
+    hubei[tk] = []
+    feihubei[tk] = []
+
+print(sorted(hubeijson.keys()))
+print(sorted(allp.keys()))
+
+for one in sorted(allp.keys()):
+    if '20200119' == one:
+        continue
+    tsum = {}
+    for tk in keywords:
+        tsum[tk] = 0
+        hubei[tk].append(hubeijson[one][tk])
+    for oneone in allp[one]:
+        for tk in keywords:
+            tsum[tk] = tsum[tk] + oneone[tk]
+    for tk in keywords:
+        quanguo[tk].append(tsum[tk])
+
+for tk in keywords:
+    for i in range(0, len(quanguo[tk])):
+        feihubei[tk].append(quanguo[tk][i] - hubei[tk][i])
+
+
+fw = open('./data/echartsdata.json', 'w', encoding='utf-8')
+json.dump({
+    'xAxis': [str(str(int(tk[4:6])) + '/' +str(int(tk[6:]))) for tk in sorted(hubeijson.keys())], 
+    'quanguo': quanguo, 
+    'hubei': hubei,
+    'feihubei': feihubei
+    }, fw)
+fw.close()
+
+print('echarts data Done!')
+
+# print(temp)
+
