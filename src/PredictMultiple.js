@@ -134,7 +134,11 @@ function PredictMultiple({ data }) {
             if (reObj) {
               const eObj = reObj.getEchartsInstance()
               // console.log(eObj.getDataURL())
-              setExported(eObj.getDataURL())
+              setExported(eObj.getDataURL(
+                {
+                  pixelRatio: 3,
+                }
+              ))
             }
           }
 
