@@ -414,7 +414,8 @@ function App () {
         >查看湖北</small>
         }</h2>
       </div>
-      <iframe src={userLocation?"https://yqdt.jianguan.gov.cn/":"https://map.sogou.com/m/shouji4/page/emap/?_=0.8058073278712437"} width="100%" height="500px" frameBorder="0"></iframe>
+      {/* <iframe src={userLocation?"https://yqdt.jianguan.gov.cn/":"https://map.sogou.com/m/shouji4/page/emap/?_=0.8058073278712437"} width="100%" height="500px" frameBorder="0"></iframe> */}
+      <iframe src="https://yqdt.jianguan.gov.cn/" width="100%" height="500px" frameBorder="0"></iframe>
       
       {/* 预测 */}
       <div className="card" id="Predict">
