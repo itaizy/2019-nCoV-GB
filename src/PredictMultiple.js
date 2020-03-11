@@ -17,7 +17,7 @@ function PredictMultiple({ data }) {
   const [exported, setExported] = useState(undefined)
 
 
-  console.log(Rref)
+  // console.log(Rref)
   useEffect(() => {
     var tmp = [];
     var tmpl = [];
@@ -120,7 +120,7 @@ function PredictMultiple({ data }) {
   }
   return (
     <>
-      {exported ? <img src={exported} /> : null}
+      {exported ? <img src={exported} style={{display:"none"}}/> : null}
       <ReactEcharts
         ref={Rref}
         echarts={echarts}
@@ -133,7 +133,7 @@ function PredictMultiple({ data }) {
             const reObj = Rref.current
             if (reObj) {
               const eObj = reObj.getEchartsInstance()
-              console.log(eObj.getDataURL())
+              // console.log(eObj.getDataURL())
               setExported(eObj.getDataURL())
             }
           }

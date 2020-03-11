@@ -100,7 +100,7 @@ function Map({ province, data, onClick }) {
       {
         exported ?
           //hide this image
-          <img src={exported} /> : null
+          <img src={exported} style={{display:"none"}}/> : null
       }
       <ReactEcharts
         echarts={echarts}
