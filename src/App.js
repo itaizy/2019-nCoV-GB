@@ -115,7 +115,7 @@ function StatIncr ({ modifyTime}) {
         <TotalTag number={all.suspectedIncr || '-'}  total={all.suspectedCount} className="number">
           疑似
         </TotalTag>
-        <TotalTag number={all.seriousIncr} total={all.seriousCount} className="dead">
+        <TotalTag number={all.seriousIncr} total={all.seriousCount} className="icu">
           重症
         </TotalTag>
         <TotalTag number={all.deadIncr} total={all.deadCount} className="dead">

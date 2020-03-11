@@ -28,6 +28,12 @@
   font-weight: 600;
 }
 
+.totaltag .icu {
+  color: rgb(184, 23, 77);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
 .totaltag .numbercured {
   color: #2E8B57;
   font-size: 1.3rem;
