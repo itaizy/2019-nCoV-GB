@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import ReactEcharts from 'echarts-for-react/lib/core'
 import echarts from 'echarts/lib/echarts'
 
@@ -6,16 +6,19 @@ import 'echarts/lib/chart/map'
 import 'echarts/lib/component/visualMap'
 import 'echarts/map/json/province/hubei.json'
 
-function Map ({ province, data, onClick }) {
+function Map({ province, data, onClick }) {
   const [loading, setLoading] = useState(true)
+
+  const reactEchartsRef = useRef(undefined)
+  const [echartObj, setEchartObj] = useState(undefined)
 
   useEffect(() => {
     setLoading(true)
     if (province) {
-        import(`echarts/map/json/province/${province.pinyin}.json`).then(map => {
-          echarts.registerMap(province.pinyin, map.default)
-          setLoading(false)
-        })
+      import(`echarts/map/json/province/${province.pinyin}.json`).then(map => {
+        echarts.registerMap(province.pinyin, map.default)
+        setLoading(false)
+      })
     } else {
       import(`echarts/map/json/china.json`).then(map => {
         echarts.registerMap('china', map.default)
@@ -44,11 +47,11 @@ function Map ({ province, data, onClick }) {
           ]
         },
         pieces: [
-          {min: 1000},
-          {min: 500, max: 999},
-          {min: 100, max: 499},
-          {min: 10, max: 99},
-          {min: 1, max: 9},
+          { min: 1000 },
+          { min: 500, max: 999 },
+          { min: 100, max: 499 },
+          { min: 10, max: 99 },
+          { min: 1, max: 9 },
         ],
         padding: 5,
         // "inverse": false,
@@ -93,16 +96,33 @@ function Map ({ province, data, onClick }) {
   }
   return (
     // loading ? <div className="loading">地图正在加载中...</div> :
-    <ReactEcharts
-      echarts={echarts}
-      option={getOption()}
-      lazyUpdate={false}
-      onEvents={{
-        click (e) {
-          onClick(e.name)
-        }
-      }}
-    />
+    <>
+      {
+        echartObj ?
+        //hide this image
+          <img src={echartObj.getDataURL()} /> : null
+      }
+      <ReactEcharts
+        echarts={echarts}
+        option={getOption()}
+        lazyUpdate={false}
+        ref={reactEchartsRef}
+        onEvents={{
+
+          click(e) {
+            onClick(e.name)
+          },
+          finished(e) {
+            const reObj = reactEchartsRef.current
+            if (reObj) {
+              const eObj = reObj.getEchartsInstance()
+              if (!echartObj?.getDataURL())
+                setEchartObj(eObj)
+            }
+          }
+        }}
+      />
+    </>
   )
 }
 
