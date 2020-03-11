@@ -8,9 +8,9 @@ import 'echarts/map/json/province/hubei.json'
 
 function Map({ province, data, onClick }) {
   const [loading, setLoading] = useState(true)
-  const [exported, setExported] = useState(undefined)
+  // const [exported, setExported] = useState(undefined)
 
-  const reactEchartsRef = useRef(undefined)
+  // const reactEchartsRef = useRef(undefined)
 
   useEffect(() => {
     setLoading(true)
@@ -27,7 +27,8 @@ function Map({ province, data, onClick }) {
     }
   }, [province])
 
-  const option = useMemo(() => {
+  // const option = useMemo(() => {
+    const getOption = () => {
     return {
       visualMap: {
         show: true,
@@ -93,32 +94,33 @@ function Map({ province, data, onClick }) {
         }
       }]
     }
-  }, [province])
+  }
+  // }, [province])
   return (
     // loading ? <div className="loading">地图正在加载中...</div> :
     <>
-      {
+      {/* {
         exported ?
           //hide this image
           <img src={exported} style={{display:"none"}}/> : null
-      }
+      } */}
       <ReactEcharts
         echarts={echarts}
-        option={option}
+        option={getOption()}
         lazyUpdate={false}
-        ref={reactEchartsRef}
+        // ref={reactEchartsRef}
         onEvents={{
 
           click(e) {
             onClick(e.name)
           },
-          rendered(e) {
-            const reObj = reactEchartsRef.current
-            if (reObj) {
-              const eObj = reObj.getEchartsInstance()
-              setExported(eObj.getDataURL())
-            }
-          }
+          // rendered(e) {
+          //   const reObj = reactEchartsRef.current
+          //   if (reObj) {
+          //     const eObj = reObj.getEchartsInstance()
+          //     setExported(eObj.getDataURL())
+          //   }
+          // }
         }}
       />
     </>

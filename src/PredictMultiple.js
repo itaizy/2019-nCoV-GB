@@ -125,7 +125,7 @@ function PredictMultiple({ data }) {
         // ref={Rref}
         echarts={echarts}
         option={getOption()}
-        lazyUpdate={true}
+        lazyUpdate={false}
         onEvents={{
           click(e) {
           },
