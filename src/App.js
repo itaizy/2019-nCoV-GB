@@ -407,11 +407,11 @@ function App () {
       <div className="card">
         <h2 id="local">周边疫情
         {
-          userLocation ? <small
-            onClick={() => _setUserLocation(false)}
-          >查看非湖北</small> : <small
-          onClick={() => _setUserLocation(true)}
-        >查看湖北</small>
+        //   userLocation ? <small
+        //     onClick={() => _setUserLocation(false)}
+        //   >查看非湖北</small> : <small
+        //   onClick={() => _setUserLocation(true)}
+        // >查看湖北</small>
         }</h2>
       </div>
       {/* <iframe src={userLocation?"https://yqdt.jianguan.gov.cn/":"https://map.sogou.com/m/shouji4/page/emap/?_=0.8058073278712437"} width="100%" height="500px" frameBorder="0"></iframe> */}
