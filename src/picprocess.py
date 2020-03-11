@@ -119,7 +119,10 @@ for one in sorted(allp.keys()):
     tsum = {}
     for tk in keywords:
         tsum[tk] = 0
-        hubei[tk].append(hubeijson[one][tk])
+        if one in hubeijson:
+            hubei[tk].append(hubeijson[one][tk])
+        else:
+            hubei[tk].append("-")
     for oneone in allp[one]:
         for tk in keywords:
             tsum[tk] = tsum[tk] + oneone[tk]
@@ -128,7 +131,11 @@ for one in sorted(allp.keys()):
 
 for tk in keywords:
     for i in range(0, len(quanguo[tk])):
-        feihubei[tk].append(quanguo[tk][i] - hubei[tk][i])
+        thb = hubei[tk][i]
+        if thb == "-":
+            feihubei[tk].append(quanguo[tk][i])
+        else:
+            feihubei[tk].append(quanguo[tk][i] - hubei[tk][i])
 
 
 fw = open('./data/echartsdata.json', 'w', encoding='utf-8')
