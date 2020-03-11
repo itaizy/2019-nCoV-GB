@@ -47,9 +47,9 @@ f = open('data/hb4gb.json', 'w', encoding='utf-8')
 hbdata = [k for k in sorted(hball['data'], key=lambda item:item['date'], reverse=True)][0]
 
 # *************************************************************
-hbdata['suspected_add'] = 28
-hbdata['suspected'] = 277
-hbdata['suspected_delete'] = 46
+hbdata['suspected_add'] = 6
+hbdata['suspected'] = 198
+hbdata['suspected_delete'] = 54
 json.dump(hbdata, f, ensure_ascii=False)
 f.close()
 # *************************************************************
@@ -74,8 +74,14 @@ f = open('data/img4gb.json', 'w', encoding='utf-8')
 json.dump(img4gb, f)
 f.close()
 
+val = os.system('python3 ImgCrawler.py')
+print('GB Done.' + str(val))
+
 val = os.system('cp -r images/ ../build/gb')
 val = os.system('cp data/qg4gb.json ../build/gb')
 val = os.system('cp data/hb4gb.json ../build/gb')
 val = os.system('cp data/img4gb.json ../build/gb')
+
+
+
 
