@@ -404,18 +404,19 @@ function App () {
       {/* </WingBlank> */}
       
       {/* 定位 */}
-      <div className="card">
+      {/* <div className="card">
         <h2 id="local">周边疫情
         {
-        //   userLocation ? <small
-        //     onClick={() => _setUserLocation(false)}
-        //   >查看非湖北</small> : <small
-        //   onClick={() => _setUserLocation(true)}
-        // >查看湖北</small>
+          userLocation ? <small
+            onClick={() => _setUserLocation(false)}
+          >查看非湖北</small> : <small
+          onClick={() => _setUserLocation(true)}
+        >查看湖北</small>
         }</h2>
-      </div>
+      </div> */}
       {/* <iframe src={userLocation?"https://yqdt.jianguan.gov.cn/":"https://map.sogou.com/m/shouji4/page/emap/?_=0.8058073278712437"} width="100%" height="500px" frameBorder="0"></iframe> */}
-      <iframe src={"https://yqdt.jianguan.gov.cn/"} width="100%" height="500px" frameBorder="0"></iframe>
+      {/* <iframe src={userLocation?"https://yqdt.jianguan.gov.cn/":"https://yqdt.jianguan.gov.cn/"} width="100%" height="500px" frameBorder="0"></iframe> */}
+      {/* <iframe src={"http://39.107.70.155/"} width="100%" height="500px" frameBorder="0"></iframe> */}
       
       {/* 预测 */}
       <div className="card" id="Predict">
