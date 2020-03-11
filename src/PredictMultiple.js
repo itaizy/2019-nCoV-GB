@@ -120,27 +120,28 @@ function PredictMultiple({ data }) {
   }
   return (
     <>
-      {/* {exported ? <img src={exported} style={{display:"none"}}/> : null} */}
+      {exported ? <img src={exported} style={{display:"none"}}/> : null}
       <ReactEcharts
-        // ref={Rref}
+        ref={Rref}
         echarts={echarts}
         option={getOption()}
         lazyUpdate={false}
         onEvents={{
           click(e) {
           },
-          // finished(e) {
-          //   const reObj = Rref.current
-          //   if (reObj) {
-          //     const eObj = reObj.getEchartsInstance()
-          //     // console.log(eObj.getDataURL())
-          //     setExported(eObj.getDataURL(
-          //       {
-          //         pixelRatio: 3,
-          //       }
-          //     ))
-          //   }
-          // }
+          finished(e) {
+            const reObj = Rref.current
+            if (reObj) {
+              const eObj = reObj.getEchartsInstance()
+              // console.log(eObj.getDataURL())
+              setExported(eObj.getDataURL(
+                {
+                  pixelRatio: 3,
+                  backgroundColor: '#fff'
+                }
+              ))
+            }
+          }
 
         }}
         style={{ height: "160px" }}
