@@ -308,7 +308,19 @@ function App () {
                 }
               ]
               }}/>
+          <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "治愈新增", 
+                  "type": "true",
+                  "data": ed.quanguo.curedIncr,
+                }
+              ]
+              }}/>
           </Suspense>
+          
           </div>
           <h2>湖北/非湖北</h2>
           <div>
@@ -370,17 +382,6 @@ function App () {
                   "legend": "非湖北治愈新增", 
                   "type": "true",
                   "data": ed.feihubei.curedIncr,
-                }
-              ]
-              }}/>
-            <PredictMultiple data={{
-              // "title": "确诊",
-              "xAxis": ed.xAxis, 
-              "yAxis": [
-                {
-                  "legend": "非湖北现存", 
-                  "type": "true",
-                  "data": ed.feihubei.currentConfirmedCount,
                 }
               ]
               }}/>
