@@ -32,6 +32,11 @@ for key in stocks:
 for key in increments:
     qg4gb[key] = user_dict[key] if key in user_dict.keys() else '-'
 
+#####################################################
+qg4gb['suspectedCount'] = 253
+#####################################################
+
+
 f = open('data/qg4gb.json', 'w', encoding='utf-8')
 json.dump(qg4gb, f)
 f.close()
@@ -47,9 +52,9 @@ f = open('data/hb4gb.json', 'w', encoding='utf-8')
 hbdata = [k for k in sorted(hball['data'], key=lambda item:item['date'], reverse=True)][0]
 
 # *************************************************************
-hbdata['suspected_add'] = 6
-hbdata['suspected'] = 198
-hbdata['suspected_delete'] = 54
+hbdata['suspected_add'] = 1
+hbdata['suspected'] = 49
+hbdata['suspected_delete'] = 110
 json.dump(hbdata, f, ensure_ascii=False)
 f.close()
 # *************************************************************
