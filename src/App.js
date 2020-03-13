@@ -45,7 +45,7 @@ function New ({ title, summary, sourceUrl, pubDate, pubDateStr }) {
       {/* <a className="title" href={sourceUrl}>{ title }</a> */}
       <a className="title">{ title }</a>
       {/* <div className="summary">{ summary.length < 200? summary: (summary.slice(0, 200)+ '...') }</div> */}
-      <div className="summary">{ summary}</div>
+      <div className="summary">{ summary }</div>
     </div>
   )
 }
@@ -69,7 +69,12 @@ function News ({ province }) {
           .slice(0, len)
           .map(n => <New {...n} key={n.id} />)
       }
-      <div className="more" onClick={() => { setLen() }}>点击查看全部动态</div>
+      {
+        len<news.length-1?
+        <div className="more" onClick={() => { setLen(len+10<news.length?len+10:news.length) }}>点击查看更多动态</div>
+        :<div>已加载全部</div>
+      }
+      
     </div>
   )
 }
