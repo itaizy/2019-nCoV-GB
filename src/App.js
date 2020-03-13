@@ -42,8 +42,10 @@ function New ({ title, summary, sourceUrl, pubDate, pubDateStr }) {
         </div>
         {dayjs(pubDate).format('YYYY-MM-DD HH:mm')}
       </div>
-      <a className="title" href={sourceUrl}>{ title }</a>
-      <div className="summary">{ summary.slice(0, 100) }...</div>
+      {/* <a className="title" href={sourceUrl}>{ title }</a> */}
+      <a className="title">{ title }</a>
+      {/* <div className="summary">{ summary.length < 200? summary: (summary.slice(0, 200)+ '...') }</div> */}
+      <div className="summary">{ summary}</div>
     </div>
   )
 }
