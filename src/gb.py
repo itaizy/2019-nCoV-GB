@@ -52,9 +52,9 @@ f = open('data/hb4gb.json', 'w', encoding='utf-8')
 hbdata = [k for k in sorted(hball['data'], key=lambda item:item['date'], reverse=True)][0]
 
 # *************************************************************
-hbdata['suspected_add'] = 1
-hbdata['suspected'] = 49
-hbdata['suspected_delete'] = 110
+hbdata['suspected_add'] = 0
+hbdata['suspected'] = 34
+hbdata['suspected_delete'] = 15
 json.dump(hbdata, f, ensure_ascii=False)
 f.close()
 # *************************************************************
