@@ -37,7 +37,7 @@ const ActionButton = (props) => <StyledFab color={"primary"} size={"medium"} sty
 export default function Index(props) {
     const [expanded, setExpanded] = useState(true)
     const NavItems = [
-        ["地图", "#Map"],
+        ["地图", "#MapTab"],
         // ["趋势", "#Incr"],
         ["趋势", "#Trends"],
         // ["定位", "#local"],
