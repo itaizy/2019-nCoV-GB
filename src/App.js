@@ -158,7 +158,7 @@ function StatIncr ({ modifyTime}) {
         </span>
       </h2>
       <div className="row">
-        <TotalTag number={all.confirmedIncr} total={all.currentConfirmedCount} className="numberconfirmed">
+        <TotalTag number={all.currentConfirmedIncr} total={all.currentConfirmedCount} className="numberconfirmed">
           现存确诊
         </TotalTag>
         <TotalTag number={all.suspectedIncr || '-'}  total={all.suspectedCount} className="number">
@@ -292,20 +292,21 @@ function App () {
   const Worlddata = countries.map(p => ({
     name: p.provinceName,
     value: p.confirmedCount
-  })).concat([{name: '中国',
-            value: all.confirmedCount
-           }])
+  }))//.concat([{name: '中国',
+//             value: all.confirmedCount
+//            }])
 
 
   const area = province ? provincesByName[province.name].cities : provinces
   const overall = province ? province : all
 
-  const Worldarea = ([{'provinceName': '中国',
-            'confirmedCount': all.confirmedCount,
-            'deadCount': all.deadCount,
-            'curedCount': all.curedCount,
-            'sort': 0
-  }]).concat(countries)
+//   const Worldarea = ([{'provinceName': '中国',
+//             'confirmedCount': all.confirmedCount,
+//             'deadCount': all.deadCount,
+//             'curedCount': all.curedCount,
+//             'sort': 0
+//   }]).concat(countries)
+  const Worldarea = countries.sort((a,b)=>(b.confirmedCount-a.confirmedCount))
 
 
   const citylist = ['武汉市','黄石市','十堰市','宜昌市','襄阳市','鄂州市','荆门市','孝感市','荆州市','黄冈市','咸宁市','随州市','恩施土家族苗族自治州仙桃市','潜江市','天门市','神农架林区']
@@ -382,13 +383,7 @@ function App () {
                 //cascade={false}
             /> */}
             <Suspense fallback={<div className="loading">正在加载中...</div>}>
-              <Carousel
-                autoplay={true}
-                infinite
-                // beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                // afterChange={index => console.log('slide to', index)}
-                // style={{ display: 'inline-block', width: '100%', height: '200px' }}
-              >
+
                   <PredictMultiple data={{
                     "xAxis": countryDataByName[countryState].date, 
                     "yAxis": [
@@ -409,7 +404,7 @@ function App () {
                     }],
                     "refresh": countryState
                     }}/>
-              </Carousel>
+
             </Suspense>
             <Flex style={{ padding: '15px' }}>
             {
