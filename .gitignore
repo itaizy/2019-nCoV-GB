@@ -3,3 +3,8 @@ build
 src/data
 src/images/*-135.png
 src/cron.log
+src/data/area.json
+src/data/countries.json
+src/data/hb4gb.json
+src/data/n163.json
+src/data/overall.json
