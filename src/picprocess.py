@@ -157,7 +157,11 @@ with open('./data/countries.json','r',encoding='utf8')as fp:
     json_data = json.load(fp)
 json_data.sort(key=lambda x:x['confirmedCount'],reverse=True)
 res_json = []
-for i in range(10):
+i=0
+while(True):
+    if json_data[i]['provinceName'] == '中国':
+        i += 1
+        continue
     url = json_data[i]['statisticsData']
     res = requests.get(url).text
     res = json.loads(res)['data']
@@ -166,6 +170,9 @@ for i in range(10):
     list3 = [str(i['dateId'])[5 if (str(i['dateId'])[4]=='0') else 4:6]+'/'+str(i['dateId'])[6:] for i in res]
     dict1 = {'provinceName':json_data[i]['provinceName'],'confirmedCount':list1,'confirmedIncr':list2,'date':list3}
     res_json.append(dict1) 
+    i += 1
+    if len(res_json)==10:
+        break
 res_json1 = json.dumps(res_json,ensure_ascii=False)
 with open('./data/echartsdata2.json', 'w') as f1:
     f1.write(res_json1)
