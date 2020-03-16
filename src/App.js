@@ -1,5 +1,5 @@
-import React, { useState, Suspense, useEffect  } from 'react'
-import {Tabs, Button, PickerView} from 'antd-mobile'
+import React, { useState, Suspense, useEffect } from 'react'
+import {Tabs, Button, PickerView, Carousel, WingBlank, Flex, Radio } from 'antd-mobile'
 import keyBy from 'lodash.keyby'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
@@ -26,6 +26,10 @@ import TotalTag from "./TotalTag";
 import 'antd-mobile/lib/tabs/style/css'
 import 'antd-mobile/lib/button/style/css'
 import 'antd-mobile/lib/picker-view/style/css'
+import 'antd-mobile/lib/carousel/style/css'
+import 'antd-mobile/lib/flex/style/css'
+import 'antd-mobile/lib/radio/style/css'
+
 
 dayjs.extend(relativeTime)
 
@@ -129,14 +133,14 @@ function WorldStat ({ modifyTime, confirmedCount, suspectedCount, deadCount, cur
         <Tag number={confirmedCount} className="numberconfirmed">
           确诊
         </Tag>
-        <Tag number={suspectedCount || '-'} className="number">
+        {/* <Tag number={suspectedCount || '-'} className="number">
           疑似
+        </Tag> */}
+        <Tag number={curedCount} className="numbercured">
+          治愈
         </Tag>
         <Tag number={deadCount} className="dead">
           死亡
-        </Tag>
-        <Tag number={curedCount} className="numbercured">
-          治愈
         </Tag>
       </div>
     </div>
@@ -150,7 +154,7 @@ function StatIncr ({ modifyTime}) {
       <h2 id="Incr">
         实时数据
         <span className="due">
-          截止时间: {dayjs(modifyTime).format('YYYY-MM-DD HH:mm')}
+          (全国)截止时间: {dayjs(modifyTime).format('YYYY-MM-DD HH:mm')}
         </span>
       </h2>
       <div className="row">
@@ -367,7 +371,7 @@ function App () {
            </h2>
            <WorldStat { ...all.foreignStatistics } name={'世界'} modifyTime={all.modifyTime} />
            <WorldMap province={country} data={Worlddata} onClick= {(name) => {}}/>
-           <PickerView
+           {/* <PickerView
                 data={ed2.map((x) => ({label:x.provinceName,value:x.provinceName}) )}
                 value={countryState}
                 onChange={(x)=>{
@@ -376,27 +380,54 @@ function App () {
                            }}
                 cols={1}
                 //cascade={false}
-            />
-           <Suspense fallback={<div className="loading">正在加载中...</div>}>
-             <PredictMultiple data={{
-               "xAxis": countryDataByName[countryState].date, 
-               "yAxis": [
-               {
-                 "legend": countryDataByName[countryState].provinceName + "累计确诊", 
-                 "type": "true",
-                 "data": countryDataByName[countryState].confirmedCount,
-               }]
-              }}/>
-             <PredictMultiple data={{
-               "xAxis": countryDataByName[countryState].date, 
-               "yAxis": [
-               {
-                 "legend": countryDataByName[countryState].provinceName + "新增确诊", 
-                 "type": "true",
-                 "data": countryDataByName[countryState].confirmedIncr,
-               }]
-              }}/>
-           </Suspense>
+            /> */}
+            <Suspense fallback={<div className="loading">正在加载中...</div>}>
+              <Carousel
+                autoplay={true}
+                infinite
+                // beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+                // afterChange={index => console.log('slide to', index)}
+                // style={{ display: 'inline-block', width: '100%', height: '200px' }}
+              >
+                  <PredictMultiple data={{
+                    "xAxis": countryDataByName[countryState].date, 
+                    "yAxis": [
+                    {
+                      "legend": countryDataByName[countryState].provinceName + "累计确诊", 
+                      "type": "true",
+                      "data": countryDataByName[countryState].confirmedCount,
+                    }],
+                    "refresh": countryState
+                    }}/>
+                  <PredictMultiple data={{
+                    "xAxis": countryDataByName[countryState].date, 
+                    "yAxis": [
+                    {
+                      "legend": countryDataByName[countryState].provinceName + "新增确诊", 
+                      "type": "true",
+                      "data": countryDataByName[countryState].confirmedIncr,
+                    }],
+                    "refresh": countryState
+                    }}/>
+              </Carousel>
+            </Suspense>
+            <Flex style={{ padding: '15px' }}>
+            {
+              ed2.map((x) => (
+                <Flex.Item key={x.provinceName}>
+                  <Radio className="my-radio" 
+                    checked={countryState === x.provinceName} 
+                    onChange={() => {
+                      setCountryState(x.provinceName)
+                      }}>{x.provinceName}
+                  </Radio>
+                </Flex.Item>
+              ))
+            }
+              
+            </Flex>
+            
+           
            <WorldArea area={Worldarea} onChange={null} />
         </div>
        </Tabs>

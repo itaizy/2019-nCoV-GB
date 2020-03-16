@@ -19,6 +19,7 @@ function PredictMultiple({ data }) {
 
   // console.log(Rref)
   useEffect(() => {
+    // console.log(data.refresh)
     var tmp = [];
     var tmpl = [];
     data.yAxis.map(n => {
@@ -48,10 +49,17 @@ function PredictMultiple({ data }) {
           // itemStyle : { normal: {label : {show: true}}}
         })
       }
-      setLine(tmp)
-      setDataLegend(tmpl)
     })
-  }, [])
+    setLine(tmp)
+    setDataLegend(tmpl)
+  }, [data.refresh])
+
+  // useEffect(() => {
+  //   console.log(data.refresh)
+  //   // const reObj = Rref.current
+  //   // const eObj = reObj.getEchartsInstance()
+  //   // eObj.setOption(getOption())
+  // }, [data.refresh])
 
   const getOption = () => {
     return {
