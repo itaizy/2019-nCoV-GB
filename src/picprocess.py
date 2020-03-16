@@ -152,3 +152,21 @@ print('echarts data Done!')
 
 # print(temp)
 
+# 爬取重点十国的新增确诊和累计确诊数据
+with open('./data/countries.json','r',encoding='utf8')as fp:
+    json_data = json.load(fp)
+json_data.sort(key=lambda x:x['confirmedCount'],reverse=True)
+res_json = []
+for i in range(10):
+    url = json_data[i]['statisticsData']
+    res = requests.get(url).text
+    res = json.loads(res)['data']
+    list1 = [i['confirmedCount'] for i in res]
+    list2 = [i['confirmedIncr'] for i in res]
+    list3 = [str(i['dateId'])[5 if (str(i['dateId'])[4]=='0') else 4:6]+'/'+str(i['dateId'])[6:] for i in res]
+    dict1 = {'provinceName':json_data[i]['provinceName'],'confirmedCount':list1,'confirmedIncr':list2,'date':list3}
+    res_json.append(dict1) 
+res_json1 = json.dumps(res_json,ensure_ascii=False)
+with open('./data/echartsdata2.json', 'w') as f1:
+    f1.write(res_json1)
+print('echarts data2 Done!')

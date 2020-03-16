@@ -1,5 +1,5 @@
 import React, { useState, Suspense, useEffect  } from 'react'
-import {Tabs, Button} from 'antd-mobile'
+import {Tabs, Button, PickerView} from 'antd-mobile'
 import keyBy from 'lodash.keyby'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
@@ -11,6 +11,7 @@ import NavFab from "./component/NavFab"
 import predictData from './data/predictData'
 import hbdata from './data/hb4gb'
 import ed from './data/echartsdata'
+import ed2 from './data/echartsdata2'
 
 import Tag from './Tag'
 
@@ -24,6 +25,7 @@ import TotalTag from "./TotalTag";
 
 import 'antd-mobile/lib/tabs/style/css'
 import 'antd-mobile/lib/button/style/css'
+import 'antd-mobile/lib/picker-view/style/css'
 
 dayjs.extend(relativeTime)
 
@@ -38,6 +40,7 @@ const provincesByName = keyBy(provinces, 'name')
 const fetcher = (url) => axios(url).then(data => {
   return data.data.data
 })
+const countryDataByName = keyBy(ed2,(x)=>(x.provinceName))
 const countryMax = 34
 
 function New ({ title, summary, sourceUrl, pubDate, pubDateStr }) {
@@ -257,6 +260,7 @@ function Header ({ province }) {
 }
 
 function App () {
+  const [countryState,setCountryState] = useState(ed2[0].provinceName)
   const [province, _setProvince] = useState(provincesByName['湖北'])
   const [userLocation, _setUserLocation] = useState(true)
   const country = null
@@ -322,10 +326,7 @@ function App () {
           }
         }
     });
-  }, [])
-
-  
-  
+  }, [])  
 
   return (
     <div>
@@ -363,19 +364,40 @@ function App () {
                   onClick={null}
                 >返回世界地图</small> : null
               }
-              </h2>
-              {/* <h3>点击省市查看详情</h3> */}
-              <WorldStat { ...all.foreignStatistics } name={'世界'} modifyTime={all.modifyTime} />
-                <WorldMap province={country} data={Worlddata} onClick= {(name) => {}}/>
-                {/*
-                  province ? false :
-                    <div className="tip">
-                      在地图中点击省份可跳转到相应省份的疫情地图，并查看该
-省相关的实时动态
-                    </div>
-                */ }
-              <WorldArea area={Worldarea} onChange={null} />
-
+           </h2>
+           <WorldStat { ...all.foreignStatistics } name={'世界'} modifyTime={all.modifyTime} />
+           <WorldMap province={country} data={Worlddata} onClick= {(name) => {}}/>
+           <PickerView
+                data={ed2.map((x) => ({label:x.provinceName,value:x.provinceName}) )}
+                value={countryState}
+                onChange={(x)=>{
+                            console.log(x);
+                            setCountryState(x);
+                           }}
+                cols={1}
+                //cascade={false}
+            />
+           <Suspense fallback={<div className="loading">正在加载中...</div>}>
+             <PredictMultiple data={{
+               "xAxis": countryDataByName[countryState].date, 
+               "yAxis": [
+               {
+                 "legend": countryDataByName[countryState].provinceName + "累计确诊", 
+                 "type": "true",
+                 "data": countryDataByName[countryState].confirmedCount,
+               }]
+              }}/>
+             <PredictMultiple data={{
+               "xAxis": countryDataByName[countryState].date, 
+               "yAxis": [
+               {
+                 "legend": countryDataByName[countryState].provinceName + "新增确诊", 
+                 "type": "true",
+                 "data": countryDataByName[countryState].confirmedIncr,
+               }]
+              }}/>
+           </Suspense>
+           <WorldArea area={Worldarea} onChange={null} />
         </div>
        </Tabs>
       </div>
