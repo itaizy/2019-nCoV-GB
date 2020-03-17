@@ -15,7 +15,7 @@ const Root = styled.div`
 `
 
 const StyledFab = styled(Fab)`
-    opacity:${({ hide }) => hide ? 0 : 0.75} !important;
+    opacity:${({ hide }) => hide ? 0.75 : 0} !important;
     transition: opacity 0.3s ease-out !important;
 `
 const MainFab = styled(Fab)`
@@ -27,7 +27,7 @@ const MainFab = styled(Fab)`
     transition: transform 0.15s ease-out !important;
     background-color:#40a9ff;
 `
-const ActionButton = (props) => <StyledFab color={"primary"} size={"medium"} style={{ margin: "0.1rem" }} hide={props.hide}>
+const ActionButton = (props) => <StyledFab color={"primary"} size={"medium"} style={{ margin: "0.1rem", display: props.hide?"":"none" }} hide={props.hide}>
     <a href={props.href} onClick={() => {window.location.replace(window.location.href.toString().replace(window.location.hash, '')+props.href)}}>
         {props.name}
     </a>
@@ -62,7 +62,7 @@ export default function Index(props) {
 
     return (
         <Root>
-            {List.map((E, idx) => <E hide={!expanded} key={idx} />)}
+            {List.map((E, idx) => <E hide={expanded?1:0} key={idx} />)}
             <MainFab
                 size={"medium"}
                 expand={expanded ? 1:0}
