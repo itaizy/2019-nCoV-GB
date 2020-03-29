@@ -38,11 +38,11 @@ function WorldMap ({ province, data, onClick }) {
           ]
         },
         pieces: [
-          {min: 1000},
-          {min: 500, max: 999},
-          {min: 100, max: 499},
-          {min: 10, max: 99},
-          {min: 1, max: 9},
+          {min: 90000},
+          {min: 10000, max: 89999},
+          {min: 1000, max: 9999},
+          {min: 100, max: 999},
+          {min: 1, max: 99},
         ],
         padding: 5,
         // "inverse": false,

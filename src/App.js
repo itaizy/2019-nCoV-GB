@@ -1,5 +1,6 @@
 import React, { useState, Suspense, useEffect } from 'react'
-import {Tabs, Button, PickerView, Carousel, WingBlank, Flex, Radio } from 'antd-mobile'
+// import {Tabs, Button, PickerView, Carousel, WingBlank, Flex, Radio } from 'antd-mobile'
+import {Tabs, Button, Flex, Radio } from 'antd-mobile'
 import keyBy from 'lodash.keyby'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
@@ -341,7 +342,7 @@ function App () {
 
         {/* 地图 */}
       <div className="card" id="MapTab">
-       <Tabs tabs={tabs} initialPage={0} animated={false} useOnPan={false}>
+       <Tabs tabs={tabs} initialPage={1} animated={false} useOnPan={false}>
         <div id="Map">
          <h2>疫情地图 { province ? `· ${province.name}` : "(点击省市查看详情)" }
          {
