@@ -80,7 +80,7 @@ function News ({ province }) {
       <h2 id="News">实时动态</h2>
       {
         news
-          .filter(n => province ? province.provinceShortName === (n.provinceName && n.provinceName.slice(0, 2)) : true)
+          // .filter(n => province ? province.provinceShortName === (n.provinceName && n.provinceName.slice(0, 2)) : true)
           .slice(0, len)
           .map(n => <New {...n} key={n.id} />)
       }
@@ -601,7 +601,22 @@ function App () {
       
       {/* 预测 */}
       <div className="card" id="Predict">
-        <h2> 疫情预测（确诊趋势）· 近期</h2>
+      <h2> 疫情趋势</h2>
+      <Suspense fallback={<div className="loading">正在加载中...</div>}>
+          <PredictMultiple data={{
+              // "title": "确诊",
+              "xAxis": ed.xAxis, 
+              "yAxis": [
+                {
+                  "legend": "", 
+                  "type": "true",
+                  "data": ed.quanguo.currentConfirmedCount,
+                }
+              ]
+              }}/>
+          </Suspense>
+        </div>
+        {/* <h2> 疫情预测（确诊趋势）· 近期</h2>
         <div height="250px">
         <Suspense fallback={<div className="loading">正在加载中...</div>}>
           <Predict data={{"legend": ["武汉", "武汉趋势"], "xAxis": predictData.xAxis, "predict": predictData.wuhan, "truedata": predictData.wuhan_t}} onClick={() => {alert('仅供参考')}} />
@@ -635,7 +650,7 @@ function App () {
                          window.dispatchEvent(new Event('resize'));
                      }}/>
                      </div>
-      </div>
+      </div> */}
       
       {/* 动态 */}
       <News province={province} />
